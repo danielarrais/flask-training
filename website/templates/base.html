@@ -1,3 +1,12 @@
+{%
+  set flash_categorys = {
+    'warning': 'warning',
+    'message': 'success',
+    'error': 'danger',
+    'info': 'secondary',
+  }
+%}
+
 <!doctype html>
 <html lang="en">
 
@@ -20,8 +29,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar">
       <div class="navbar-nav">
+        {% if user and user.is_authenticated %}
         <a class="nav-item nav-link" id="home" href="/">Home</a>
         <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+        {% endif %}
         <a class="nav-item nav-link" id="login" href="/login">Login</a>
         <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
       </div>
@@ -29,16 +40,16 @@
   </nav>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="alert alert-{{'danger' if category == 'error' else category}} alter-dismissable fade show">
-          {{ message }}
-          <button type="button" class="close" data-dismiss="alert">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      {% endfor %}
-    {% endif %}
+  {% if messages %}
+  {% for category, message in messages %}
+  <div class="alert alert-{{flash_categorys[category]}} alter-dismissable fade show">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+  {% endif %}
   {% endwith %}
 
   <div class="container">
