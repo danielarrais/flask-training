@@ -5,5 +5,23 @@ Home
 {% endblock %}
 
 {% block content %}
-<h1>Where welcome {{user.first_name}}</h1>
+<h1 align="center">Notes</h1>
+
+<ul class="list-group list-group-flush" id="notes">
+    {% for note in user.notes%}
+        <li class="list-group-item">
+        {{ note.data }}
+        <button type="button" class="close" onclick="deleteNote({{ note.id }})">
+            <span aria-hiden="true">&times;</span>
+        </button>
+        </li>
+    {% endfor %}
+</ul>
+
+
+<form action="" method="post">
+    <textarea name="note" id="note" rows="10" class="form-control"></textarea>
+    <br>
+    <button type="submit" class="btn btn-primary">Add note</button>
+</form>
 {% endblock %}
